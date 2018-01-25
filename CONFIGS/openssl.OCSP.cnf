@@ -1,0 +1,86 @@
+##### blah ###########################################################
+HOME											= .
+RANDFILE										= ./PROCESS/$ENV::PROCESSPATH/.rnd
+oid_section										= new_oids
+
+################################################################
+[ new_oids ]
+
+################################################################
+[ ca ]
+default_ca										= CA_default
+
+################################################################
+[ CA_default ]
+dir													= .
+certs												= ./CA
+new_certs_dir									= ./CERTSTORE
+crl_dir											= ./CRLS
+RANDFILE										= ./PROCESS/$ENV::PROCESSPATH/.rand
+database										= ./PROCESS/$ENV::PROCESSPATH/index.txt
+serial												= ./PROCESS/$ENV::PROCESSPATH/serial
+default_days									= 3650
+default_md										= sha256
+preserve											= no
+policy											= policy_match
+default_crl_days								= 30
+name_opt 										= ca_default
+cert_opt 										= ca_default
+
+################################################################
+[ policy_match ]
+countryName									= match
+organizationName								= supplied
+organizationalUnitName						= supplied
+#1.organizationalUnitName						= supplied
+commonName									= supplied
+
+################################################################
+[ req ]
+default_bits									= 2048
+distinguished_name							= req_distinguished_name
+x509_extensions								= v3_ca
+input_password								= password
+output_password								= password
+string_mask 									= nombstr
+
+################################################################
+[ req_distinguished_name ]
+countryName									= Country Name (C=)
+countryName_default						= US
+countryName_min								= 2
+countryName_max							= 2
+0.organizationName							= Organization Name (O=)
+0.organizationName_default				= $ENV::ORGNAME
+0.organizationalUnitName					= Organizational Unit Name 1 (OU=)
+0.organizationalUnitName_default		= $ENV::ORGUNITNAME
+#1.organizationalUnitName						= Organizational Unit Name 2 (OU=)
+#1.organizationalUnitName_default			= $ENV::ORGUNITNAME
+commonName									= $ENV::COMMONNAMESTRING
+commonName_max							= 64
+commonName_default						= $ENV::COMMONNAME
+
+################################################################
+[ v3_ca ]
+## This section is used when creating a new CA certificate
+nsComment										= "OpenSSL generated OCSP signing certificate"
+subjectKeyIdentifier							= hash
+authorityKeyIdentifier						= keyid,issuer:always
+authorityInfoAccess 						= @aia_section
+subjectAltName								= @subjaltname_section
+extendedKeyUsage							= OCSPSigning
+certificatePolicies								= 2.16.840.1.101.2.1.11.5, 2.16.840.1.101.2.1.11.18
+keyUsage										= critical, digitalSignature, cRLSign
+noCheck 										= ignore
+
+################################################################
+######################## SUB SECTIONS ##############################
+################################################################
+
+[ subjaltname_section ]
+DNS.1											= $ENV::COMMONNAME
+
+[ aia_section ]
+caIssuers;URI.1								= http://ca.alpha.com/ca.alpha.com.cer
+OCSP;URI.2										= http://ca.alpha.com/ocsp
+

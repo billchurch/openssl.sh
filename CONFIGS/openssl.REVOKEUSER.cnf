@@ -1,0 +1,30 @@
+##### blah ###########################################################
+HOME											= .
+RANDFILE										= ./PROCESS/$ENV::PROCESSPATH/.rnd
+oid_section										= new_oids
+
+################################################################
+[ new_oids ]
+
+################################################################
+[ ca ]
+default_ca										= CA_default
+
+################################################################
+[ CA_default ]
+dir													= .
+certs												= ./CA
+new_certs_dir									= ./CERTSTORE
+crl_dir											= ./CRLS
+RANDFILE										= ./PROCESS/$ENV::PROCESSPATH/.rand
+database										= ./PROCESS/$ENV::PROCESSPATH/index.txt
+serial												= ./PROCESS/$ENV::PROCESSPATH/serial
+certificate										= $ENV::CERTIFICATE
+private_key										= $ENV::PRIVATE_KEY
+crl													= $ENV::CRL
+default_days									= 3650
+default_md										= sha256
+preserve											= no
+default_crl_days								= 30
+name_opt 										= ca_default
+cert_opt 										= ca_default
