@@ -20,7 +20,7 @@ usage() {
 [[ ! -f CA/$2.cer && ! -f CA/$2.key ]] && echo CA $2 does not exist && exit
 [ ! -d SERVERCERTS/$2 ] && mkdir SERVERCERTS/$2
 [ ! -f PROCESS/$2/index.txt ] && touch PROCESS/$2/index.txt
-[ ! -f PROCESS/$2/serial ] && echo -n 01 > PROCESS/$2/serial
+[ ! -f PROCESS/$2/serial ] && openssl rand -hex 16 > PROCESS/$2/serial
 
 orgname=`openssl x509 -noout -subject -in CA/$2.cer | sed -n '/^subject/s/^.*O=//p' | sed 's/\/.*$//'`
 

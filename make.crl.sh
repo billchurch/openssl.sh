@@ -16,8 +16,8 @@ usage() {
 [ $# -lt 2 ] && usage
 [[ ! -f CA/$2.cer && ! -f CA/$2.key ]] && echo CA $2 does not exist && exit
 [ ! -d CRLS/$2 ] && mkdir -p CRLS/$2
-[ ! -f PROCESS/$2/index.txt ] && echo -n 2 > PROCESS/$2/index.txt
-[ ! -f PROCESS/$2/serial ] && echo 01 > PROCESS/$2/serial
+[ ! -f PROCESS/$2/index.txt ] && touch PROCESS/$2/index.txt
+[ ! -f PROCESS/$2/serial ] && openssl rand -hex 16 > PROCESS/$2/serial
 
 [ -f CONFIGS/openssl_local ] && rm CONFIGS/openssl_local
 echo PROCESSPATH = $2 >> CONFIGS/openssl_local

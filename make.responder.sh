@@ -19,9 +19,4 @@ usage() {
 [[ ! -f SERVERCERTS/$1/$2.crt && ! -f SERVERCERTS/$1/$2.key ]] && echo "SERVERCERTS/$1/$2.(crt|key) signing cert|key does not exist" && exit
 [ ! -f PROCESS/$1/index.txt ] && echo "Revocation database PROCESS/$1/index.txt does not exist." && exit
 
-while true; do
-  openssl ocsp -index PROCESS/$1/index.txt -CA CA/$1.cer -rsigner SERVERCERTS/$1/$2.crt -rkey SERVERCERTS/$1/$2.key -port $3
-  echo
-  echo recycling...
-  echo
-done
+openssl ocsp -index PROCESS/$1/index.txt -CA CA/$1.cer -rsigner SERVERCERTS/$1/$2.crt -rkey SERVERCERTS/$1/$2.key -port $3

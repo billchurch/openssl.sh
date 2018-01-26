@@ -21,7 +21,7 @@ usage() {
 [ ! -d USERCERTS/$2 ] && mkdir -p USERCERTS/$2
 [ ! -f PROCESS/$2/index.txt ] && touch PROCESS/$2/index.txt
 [ ! -f PROCESS/$2/index.txt.attr ] && touch PROCESS/$2/index.txt.attr
-[ ! -f PROCESS/$2/serial ] && echo -n 01 > PROCESS/$2/serial
+[ ! -f PROCESS/$2/serial ] && openssl rand -hex 16 > PROCESS/$2/serial
 [ ! -f PROCESS/$2/serial ] && touch PROCESS/$2/$2.srl
 
 orgname=`openssl x509 -noout -subject -in CA/$2.cer | sed -n '/^subject/s/^.*O=//p' | sed 's/\/.*$//'`

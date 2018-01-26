@@ -20,7 +20,7 @@ usage() {
 [ ! -d PROCESS/$1 ] && mkdir -p PROCESS/$1
 [ ! -d CA ] && mkdir CA
 [ ! -f PROCESS/$1/index.txt ] && touch PROCESS/$1/index.txt
-[ ! -f PROCESS/$1/serial ] && echo 01 > PROCESS/$1/serial
+[ ! -f PROCESS/$1/serial ] && openssl rand -hex 16  > PROCESS/$1/serial
 
 [ -f CONFIGS/openssl_local ] && rm CONFIGS/openssl_local
 echo "PROCESSPATH = $1" >> CONFIGS/openssl_local

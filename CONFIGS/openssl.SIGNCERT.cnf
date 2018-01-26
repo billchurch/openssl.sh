@@ -1,99 +1,99 @@
 ##### blah ###########################################################
-HOME											= .
-RANDFILE										= ./PROCESS/$ENV::PROCESSPATH/.rnd
-oid_section										= new_oids
+HOME                          = .
+RANDFILE                      = ./PROCESS/$ENV::PROCESSPATH/.rnd
+oid_section                   = new_oids
 
 ################################################################
 [ new_oids ]
 
 ################################################################
 [ ca ]
-default_ca										= CA_default
+default_ca                    = CA_default
 
 ################################################################
 [ CA_default ]
-dir													= .
-certs												= ./CA
-new_certs_dir									= ./CERTSTORE
-crl_dir											= ./CRLS
-RANDFILE										= ./PROCESS/$ENV::PROCESSPATH/.rand
-database										= ./PROCESS/$ENV::PROCESSPATH/index.txt
-serial												= ./PROCESS/$ENV::PROCESSPATH/serial
-default_days									= 3650
-default_md										= sha256
-preserve											= no
-policy											= policy_match
-default_crl_days								= 30
-name_opt 										= ca_default
-cert_opt 										= ca_default
+dir                           = .
+certs                         = ./CA
+new_certs_dir                 = ./CERTSTORE
+crl_dir                       = ./CRLS
+RANDFILE                      = ./PROCESS/$ENV::PROCESSPATH/.rand
+database                      = ./PROCESS/$ENV::PROCESSPATH/index.txt
+serial                        = ./PROCESS/$ENV::PROCESSPATH/serial
+default_days                  = 3650
+default_md                    = sha256
+preserve                      = no
+policy                        = policy_match
+default_crl_days              = 30
+name_opt                      = ca_default
+cert_opt                      = ca_default
 
 ################################################################
 [ policy_match ]
-countryName									= match
-organizationName								= supplied
-organizationalUnitName						= supplied
-#1.organizationalUnitName						= supplied
-commonName									= supplied
+countryName                   = match
+organizationName              = supplied
+organizationalUnitName        = supplied
+#1.organizationalUnitName     = supplied
+commonName                    = supplied
 
 ################################################################
 [ req ]
-default_bits									= 2048
-distinguished_name							= req_distinguished_name
-x509_extensions								= v3_ca
-input_password								= password
-output_password								= password
-string_mask 									= nombstr
+default_bits                  = 2048
+distinguished_name            = req_distinguished_name
+x509_extensions               = v3_ca
+input_password                = password
+output_password               = password
+string_mask                   = nombstr
 
 ################################################################
 [ req_distinguished_name ]
-countryName									= Country Name (C=)
-countryName_default						= US
-countryName_min								= 2
-countryName_max							= 2
-0.organizationName							= Organization Name (O=)
-0.organizationName_default				= $ENV::ORGNAME
-0.organizationalUnitName					= Organizational Unit Name 1 (OU=)
-0.organizationalUnitName_default		= $ENV::ORGUNITNAME
-#1.organizationalUnitName						= Organizational Unit Name 2 (OU=)
-#1.organizationalUnitName_default			= $ENV::ORGUNITNAME
-commonName									= $ENV::COMMONNAMESTRING
-commonName_max							= 64
-commonName_default						= $ENV::COMMONNAME
+countryName                         = Country Name (C=)
+countryName_default                 = US
+countryName_min                     = 2
+countryName_max                     = 2
+0.organizationName                  = Organization Name (O=)
+0.organizationName_default          = $ENV::ORGNAME
+0.organizationalUnitName            = Organizational Unit Name 1 (OU=)
+0.organizationalUnitName_default    = $ENV::ORGUNITNAME
+#1.organizationalUnitName           = Organizational Unit Name 2 (OU=)
+#1.organizationalUnitName_default   = $ENV::ORGUNITNAME
+commonName                          = $ENV::COMMONNAMESTRING
+commonName_max                      = 64
+commonName_default                  = $ENV::COMMONNAME
 
 ################################################################
 [ v3_ca ]
 ## This section is used when creating a new CA certificate
-nsComment										= "OpenSSL generated web server certificate"
-subjectKeyIdentifier							= hash
-authorityKeyIdentifier						= keyid,issuer:always
-authorityInfoAccess 						= @aia_section
-crlDistributionPoints							= @crldp_section
-#subjectAltName								= @subjaltname_section
-certificatePolicies								= 2.16.840.1.101.2.1.11.5, 2.16.840.1.101.2.1.11.18
-#extendedKeyUsage							= clientAuth, serverAuth, 1.3.6.1.5.5.8.2.2, 2.5.29.37.0
-extendedKeyUsage							= serverAuth, 1.3.6.1.5.5.8.2.2, 2.5.29.37.0
-keyUsage										= critical, digitalSignature, keyEncipherment
+nsComment                         = "OpenSSL generated web server certificate"
+subjectKeyIdentifier              = hash
+authorityKeyIdentifier            = keyid,issuer:always
+authorityInfoAccess               = @aia_section
+crlDistributionPoints             = @crldp_section
+#subjectAltName                   = @subjaltname_section
+certificatePolicies               = 2.16.840.1.101.2.1.11.5, 2.16.840.1.101.2.1.11.18
+#extendedKeyUsage                 = clientAuth, serverAuth, 1.3.6.1.5.5.8.2.2, 2.5.29.37.0
+extendedKeyUsage                  = serverAuth, 1.3.6.1.5.5.8.2.2, 2.5.29.37.0
+keyUsage                          = critical, digitalSignature, keyEncipherment
 
 ################################################################
 ######################## SUB SECTIONS ##############################
 ################################################################
 
 [ crldp_section ]
-URI.1												= http://ca.alpha.com/crl/ca.alpha.com.crl
-URI.2												= ldap://10.80.0.200:10389/cn=cdp,dc=homelab,dc=com?certificateRevocationList
+URI.1                             = http://ca.alpha.com/crl/ca.alpha.com.crl
+URI.2                             = ldap://10.80.0.200:10389/cn=cdp,dc=homelab,dc=com?certificateRevocationList
 
 [ subjaltname_section ]
-#DNS.1											= $ENV::COMMONNAME
-#DNS.2											= testserver1
-#DNS.2											= docs.google.com
-#DNS.3											= 0.docs.google.com
-#DNS.4											= google.com
-#DNS.5											= www.google.com
-#DNS.6											= accounts.google.com
-#DNS.7											= apis.google.com
-#DNS.8											= drive.google.com
-#DNS.9											= 0.drive.google.com
+#DNS.1                      = $ENV::COMMONNAME
+#DNS.2                      = testserver1
+#DNS.2                      = docs.google.com
+#DNS.3                      = 0.docs.google.com
+#DNS.4                      = google.com
+#DNS.5                      = www.google.com
+#DNS.6                      = accounts.google.com
+#DNS.7                      = apis.google.com
+#DNS.8                      = drive.google.com
+#DNS.9                      = 0.drive.google.com
 
 [ aia_section ]
-caIssuers;URI.1								= http://ca.alpha.com/ca.alpha.com.cer
-OCSP;URI.2										= http://ca.alpha.com/ocsp
+caIssuers;URI.1               = http://ca.alpha.com/ca.alpha.com.cer
+OCSP;URI.2                    = http://ca.alpha.com/ocsp

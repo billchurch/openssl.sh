@@ -20,10 +20,10 @@ usage() {
 
 [[ ! -f CA/$2.cer && ! -f CA/$2.key ]] && echo CA $2 does not exist && exit
 [ ! -f PROCESS/$2/index.txt ] && touch PROCESS/$2/index.txt
-[ ! -f PROCESS/$2/serial ] && echo -n 01 > PROCESS/$2/serial
+[ ! -f PROCESS/$2/serial ] && openssl rand -hex 16 > PROCESS/$2/serial
 [ ! -d PROCESS/$1 ] && mkdir PROCESS/$1
 [ ! -f PROCESS/$1/index.txt ] && touch PROCESS/$1/index.txt
-[ ! -f PROCESS/$1/serial ] && echo -n 01 > PROCESS/$1/serial
+[ ! -f PROCESS/$1/serial ] && openssl rand -hex 16 > PROCESS/$1/serial
 
 orgname=`openssl x509 -noout -subject -in CA/$2.cer | sed -n '/^subject/s/^.*O=//p' | sed 's/\/.*$//'`
 
@@ -61,7 +61,7 @@ openssl req -new -config CONFIGS/openssl_local -days 1024 -key CA/$1.key -out CA
 openssl x509 -req -$SHA -days 1024 -CA CA/$2.cer -CAkey CA/$2.key -in CA/$1.csr -CAserial PROCESS/$1/serial -extfile CONFIGS/openssl_local -extensions v3_ca -out CA/$1.cer
 
 rm CA/*.csr
-rm CONFIGS/openssl_local
+# rm CONFIGS/openssl_local
 
 echo
 echo

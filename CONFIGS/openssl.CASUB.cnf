@@ -1,7 +1,7 @@
 ##### blah ###########################################################
-HOME											= .
-RANDFILE										= ./PROCESS/$ENV::PROCESSPATH/.rnd
-oid_section										= new_oids
+HOME                      = .
+RANDFILE                  = ./PROCESS/$ENV::PROCESSPATH/.rnd
+oid_section               = new_oids
 
 ################################################################
 [ new_oids ]
@@ -10,101 +10,99 @@ oid_section										= new_oids
 
 ################################################################
 [ ca ]
-default_ca										= CA_default
+default_ca                = CA_default
 
 ################################################################
 [ CA_default ]
-dir													= .
-certs												= ./CA
-new_certs_dir									= ./CERTSTORE
-crl_dir											= ./CRLS
-RANDFILE										= ./PROCESS/$ENV::PROCESSPATH/.rand
-database										= ./PROCESS/$ENV::PROCESSPATH/index.txt
-serial												= ./PROCESS/$ENV::PROCESSPATH/serial
-default_days									= 3650
-default_md										= sha256
-preserve											= no
-policy											= policy_match
-default_crl_days								= 30
-name_opt 										= ca_default
-cert_opt 										= ca_default
+dir                       = .
+certs                     = ./CA
+new_certs_dir             = ./CERTSTORE
+crl_dir                   = ./CRLS
+RANDFILE                  = ./PROCESS/$ENV::PROCESSPATH/.rand
+database                  = ./PROCESS/$ENV::PROCESSPATH/index.txt
+serial                    = ./PROCESS/$ENV::PROCESSPATH/serial
+default_days              = 3650
+default_md                = sha256
+preserve                  = no
+policy                    = policy_match
+default_crl_days          = 30
+name_opt                  = ca_default
+cert_opt                  = ca_default
 
 ################################################################
 [ policy_match ]
-countryName									= match
-organizationName								= supplied
-organizationalUnitName						= supplied
-#1.organizationalUnitName						= supplied
-commonName									= supplied
+countryName               = match
+organizationName          = supplied
+organizationalUnitName    = supplied
+#1.organizationalUnitName = supplied
+commonName                = supplied
 
 ################################################################
 [ req ]
-default_bits									= 2048
-distinguished_name							= req_distinguished_name
-x509_extensions								= v3_ca
-input_password								= password
-output_password								= password
-string_mask 									= nombstr
+default_bits              = 2048
+distinguished_name        = req_distinguished_name
+x509_extensions           = v3_ca
+input_password            = password
+output_password           = password
+string_mask               = nombstr
 
 ################################################################
 [ req_distinguished_name ]
-countryName									= Country Name (C=)
-countryName_default						= US
-countryName_min								= 2
-countryName_max							= 2
-0.organizationName							= Organization Name (O=)
-0.organizationName_default				= $ENV::ORGNAME
-0.organizationalUnitName					= Organizational Unit Name 1 (OU=)
-0.organizationalUnitName_default		= $ENV::ORGUNITNAME
-#1.organizationalUnitName						= Organizational Unit Name 2 (OU=)
-#1.organizationalUnitName_default			= $ENV::ORGUNITNAME
-commonName									= $ENV::COMMONNAMESTRING
-commonName_max							= 64
-commonName_default						= $ENV::COMMONNAME
+countryName                       = Country Name (C=)
+countryName_default               = US
+countryName_min                   = 2
+countryName_max                   = 2
+0.organizationName                = Organization Name (O=)
+0.organizationName_default        = $ENV::ORGNAME
+0.organizationalUnitName          = Organizational Unit Name 1 (OU=)
+0.organizationalUnitName_default  = $ENV::ORGUNITNAME
+#1.organizationalUnitName         = Organizational Unit Name 2 (OU=)
+#1.organizationalUnitName_default = $ENV::ORGUNITNAME
+commonName                        = $ENV::COMMONNAMESTRING
+commonName_max                    = 64
+commonName_default                = $ENV::COMMONNAME
 
 ################################################################
 [ v3_ca ]
 ## This section is used when creating a new CA certificate
-nsComment										= "OpenSSL generated subordinate authority certificate"
-#subjectKeyIdentifier							= hash
-#authorityKeyIdentifier						= keyid,issuer
-#policyConstraints 							= requireExplicitPolicy:0
-#certificatePolicies								= 2.16.840.1.101.2.1.11.17, 2.16.840.1.101.2.1.11.9, 2.16.840.1.101.2.1.11.5, 2.16.840.1.101.2.1.11.18, 2.16.840.1.101.2.1.11.19, 2.16.840.1.101.3.2.1.3.26, 2.16.840.1.101.3.2.1.3.27
-#authorityInfoAccess 						= @aia_section
-#crlDistributionPoints							= @crldp_section
-#keyUsage										= digitalSignature, keyCertSign, cRLSign
-#basicConstraints								= critical, CA:TRUE
+nsComment                         = "OpenSSL generated subordinate authority certificate"
+#subjectKeyIdentifier             = hash
+#authorityKeyIdentifier           = keyid,issuer
+#policyConstraints                = requireExplicitPolicy:0
+#certificatePolicies              = 2.16.840.1.101.2.1.11.17, 2.16.840.1.101.2.1.11.9, 2.16.840.1.101.2.1.11.5, 2.16.840.1.101.2.1.11.18, 2.16.840.1.101.2.1.11.19, 2.16.840.1.101.3.2.1.3.26, 2.16.840.1.101.3.2.1.3.27
+#authorityInfoAccess              = @aia_section
+#crlDistributionPoints            = @crldp_section
+#keyUsage                         = digitalSignature, keyCertSign, cRLSign
+#basicConstraints                 = critical, CA:TRUE
 
 ## For SHA-1 Federal Root CA
-#subjectInfoAccess							= @sai_section
-keyUsage										= digitalSignature, keyCertSign, cRLSign
-subjectKeyIdentifier							= hash
-authorityKeyIdentifier						= keyid,issuer
-crlDistributionPoints							= @crldp_section
-authorityInfoAccess 						= @aia_section
-#certificateTemplate							= DER:1E:0E:00:43:00:72:00:6F:00:73:00:73:00:43:00:41
-certificatePolicies								= 2.16.840.1.101.3.2.1.3.6,2.16.840.1.101.3.2.1.3.7,2.16.840.1.101.3.2.1.3.8,2.16.840.1.101.3.2.1.3.13,2.16.840.1.101.3.2.1.3.16,2.16.840.1.101.3.2.1.3.17,2.16.840.1.101.3.2.1.3.1,2.16.840.1.101.3.2.1.3.2,2.16.840.1.101.3.2.1.3.14,2.16.840.1.101.3.2.1.3.15,2.16.840.1.101.3.2.1.3.18,2.16.840.1.101.3.2.1.3.20,2.16.840.1.101.3.2.1.3.19,2.16.840.1.101.3.2.1.3.21,2.16.840.1.101.3.2.1.3.23,2.16.840.1.101.3.2.1.3.22,2.16.840.1.101.3.2.1.3.24,2.16.840.1.101.3.2.1.3.25,2.16.840.1.101.3.2.1.3.26,2.16.840.1.101.3.2.1.3.27
-basicConstraints								= critical, CA:TRUE
-
-
+#subjectInfoAccess                = @sai_section
+keyUsage                          = digitalSignature, keyCertSign, cRLSign
+subjectKeyIdentifier              = hash
+authorityKeyIdentifier            = keyid,issuer
+crlDistributionPoints             = @crldp_section
+authorityInfoAccess               = @aia_section
+#certificateTemplate              = DER:1E:0E:00:43:00:72:00:6F:00:73:00:73:00:43:00:41
+certificatePolicies               = 2.16.840.1.101.3.2.1.3.6,2.16.840.1.101.3.2.1.3.7,2.16.840.1.101.3.2.1.3.8,2.16.840.1.101.3.2.1.3.13,2.16.840.1.101.3.2.1.3.16,2.16.840.1.101.3.2.1.3.17,2.16.840.1.101.3.2.1.3.1,2.16.840.1.101.3.2.1.3.2,2.16.840.1.101.3.2.1.3.14,2.16.840.1.101.3.2.1.3.15,2.16.840.1.101.3.2.1.3.18,2.16.840.1.101.3.2.1.3.20,2.16.840.1.101.3.2.1.3.19,2.16.840.1.101.3.2.1.3.21,2.16.840.1.101.3.2.1.3.23,2.16.840.1.101.3.2.1.3.22,2.16.840.1.101.3.2.1.3.24,2.16.840.1.101.3.2.1.3.25,2.16.840.1.101.3.2.1.3.26,2.16.840.1.101.3.2.1.3.27
+basicConstraints                  = critical, CA:TRUE
 
 ## For DoD Interoperability Root CA 1
-#certificatePolicies								= 2.16.840.1.101.3.2.1.3.23,2.16.840.1.101.3.2.1.3.24,2.16.840.1.101.3.2.1.3.25
-#keyUsage										= critical, keyCertSign, cRLSign
-#nameConstraints								= critical, permitted;dirName:nc_dir1, permitted;dirName:nc_dir2
-#policyMappings 								= 2.16.840.1.101.3.2.1.3.23:2.16.840.1.101.2.1.11.18,2.16.840.1.101.3.2.1.3.24:2.16.840.1.101.2.1.11.19,2.16.840.1.101.3.2.1.3.25:2.16.840.1.101.2.1.11.18
+#certificatePolicies              = 2.16.840.1.101.3.2.1.3.23,2.16.840.1.101.3.2.1.3.24,2.16.840.1.101.3.2.1.3.25
+#keyUsage                         = critical, keyCertSign, cRLSign
+#nameConstraints                  = critical, permitted;dirName:nc_dir1, permitted;dirName:nc_dir2
+#policyMappings                   = 2.16.840.1.101.3.2.1.3.23:2.16.840.1.101.2.1.11.18,2.16.840.1.101.3.2.1.3.24:2.16.840.1.101.2.1.11.19,2.16.840.1.101.3.2.1.3.25:2.16.840.1.101.2.1.11.18
 
 ################################################################
 ######################## SUB SECTIONS ##############################
 ################################################################
 
 [ crldp_section ]
-URI.1												= http://ca.alpha.com/crl/ca.alpha.com.crl
-URI.2												= ldap://10.80.0.200:10389/cn=cdp,dc=homelab,dc=com?certificateRevocationList
+URI.1                             = http://ca.alpha.com/crl/ca.alpha.com.crl
+URI.2                             = ldap://10.80.0.200:10389/cn=cdp,dc=homelab,dc=com?certificateRevocationList
 
 [ aia_section ]
-caIssuers;URI.1								= http://ca.alpha.com/ca.alpha.com.cer
-OCSP;URI.2										= http://ca.alpha.com/ocsp
+caIssuers;URI.1                   = http://ca.alpha.com/ca.alpha.com.cer
+OCSP;URI.2                        = http://ca.alpha.com/ocsp
 
 [ nc_dir1 ]
 C=US
